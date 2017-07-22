@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Todos Api', type: :request do
-  subject(:todos) { create_list(:todo, 10) }
-  let(:todo_id) { todos.first.id }
+  before do
+    @todos = create_list(:todo, 10)
+  end
+  let(:todo_id) { @todos.first.id }
 
 
   describe 'GET /todos' do
@@ -49,7 +51,7 @@ RSpec.describe 'Todos Api', type: :request do
 
       it 'returns a validation failure message' do
         expect(response.body)
-          .to match(/Validation failed: Create by can't be blank/)
+          .to match(/Validation failed: Created by can't be blank/)
       end
     end
   end
