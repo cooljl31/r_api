@@ -22,14 +22,36 @@ module API
       resources :todos do
         desc 'Create Item'
         params do
+          requires :todo_id, type: String, desc: 'Item ID'
           requires :name, type: String, desc: 'Item name'
           requires :done, type: Boolean, desc: 'Item status'
         end
         route_param :todo_id do
           resources :items do
             post '', root: :items do
-              @todo = Todo.find_by(permitted_params[:todo_id])
+              @todo = Todo.find(permitted_params[:todo_id])
               @todo.items.create!(permitted_params)
+            end
+          end
+        end
+      end
+
+      resources :todos do
+        desc 'Update Item'
+        params do
+          requires :todo_id, type: String, desc: 'Item ID'
+          requires :id, type: String, desc: 'Item ID'
+          optional :name, type: String, desc: 'Item name'
+          optional :done, type: Boolean, desc: 'Item status'
+        end
+        route_param :todo_id do
+          resources :items do
+            route_param :id do
+              put '', root: :items do
+                @todo = Todo.find(permitted_params[:todo_id])
+                @item = @todo.items.find(permitted_params[:id])
+                @item.update(permitted_params)
+              end
             end
           end
         end
