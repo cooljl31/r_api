@@ -16,6 +16,10 @@ class Message
       'Missing token'
     end
 
+    def signature_expired
+      'Signature has expired'
+    end
+
     def unauthorized
       'Unauthorized request'
     end
