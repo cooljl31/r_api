@@ -3,7 +3,7 @@ module V1
     before_action :set_todos, only: [:show, :update, :destroy]
 
     def index
-      @todos = Todo.all
+      @todos = current_user.todos.paginate(page: params[:page], per_page: 20)
       json_response(@todos)
     end
 
