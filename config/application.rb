@@ -27,11 +27,11 @@ module RApi
             :post, :put, :delete, :options]
       end
     end
-    #config.autoload_paths += %W(#{config.root}/lib)
-    #config.autoload_paths += Dir["#{config.root}/lib/**/"]
+    config.paths.add 'app/api', glob: '**/*.rb'
 
     config.eager_load_paths += Dir[
-      "#{config.root}/lib/**/"
+      "#{config.root}/lib/**/",
+      "#{Rails.root}/app"
     ]
     #config.active_record.raise_in_transactional_callbacks = true
     # Settings in config/environments/* take precedence over those specified here.
